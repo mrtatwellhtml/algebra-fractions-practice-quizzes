@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algebraic Fractions — Practice Tests</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
+<style>
+:root {
+  --navy:    #0f2340;
+  --blue:    #1d4ed8;
+  --blue-md: #2563eb;
+  --blue-lt: #dbeafe;
+  --blue-xs: #eff6ff;
+  --gold:    #b45309;
+  --gold-lt: #fef3c7;
+  --green:   #15803d;
+  --green-lt:#dcfce7;
+  --red:     #b91c1c;
+  --red-lt:  #fee2e2;
+  --slate:   #475569;
+  --slate-lt:#f1f5f9;
+  --white:   #ffffff;
+  --border:  #e2e8f0;
+  --shadow:  0 1px 3px rgba(15,35,64,.08),0 1px 2px rgba(15,35,64,.06);
+  --shadow-md:0 4px 12px rgba(15,35,64,.10);
+  --shadow-lg:0 8px 24px rgba(15,35,64,.12);
+  --radius:  12px;
+  --ff-body: 'Plus Jakarta Sans', sans-serif;
+  --ff-math: 'Lora', serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff-body);background:#f8fafc;color:var(--navy);min-height:100vh;line-height:1.5}
+
+/* ── Screens ───────────────────────────────────────────────────── */
+.screen{display:none;min-height:100vh}
+.screen.active{display:block}
+
+/* ════ LANDING ════════════════════════════════════════════════════ */
+#screen-landing{background:linear-gradient(145deg,#0a1628 0%,#0f2340 40%,#1a3a60 100%);min-height:100vh;display:none;flex-direction:column;align-items:center;padding:48px 20px}
+#screen-landing.active{display:flex}
+
+.landing-badge{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.7);font-size:0.78rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:28px
+}
+.landing-title{
+  font-family:var(--ff-math);font-size:clamp(2rem,5vw,3.2rem);font-weight:600;
+  color:#fff;text-align:center;line-height:1.2;margin-bottom:12px
+}
+.landing-sub{
+  color:rgba(255,255,255,.55);font-size:1rem;text-align:center;
+  max-width:480px;margin-bottom:56px;font-weight:400
+}
+
+/* Test cards grid */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;width:100%;max-width:920px;margin-bottom:48px}
+.test-card{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;padding:32px 28px;cursor:pointer;transition:all .2s ease;
+  position:relative;overflow:hidden
+}
+.test-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--card-c1),var(--card-c2));
+}
+.test-card:hover{background:rgba(255,255,255,.09);transform:translateY(-3px);border-color:rgba(255,255,255,.22);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.card-level{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:10px}
+.card-title{font-family:var(--ff-math);font-size:1.5rem;color:#fff;margin-bottom:8px;font-weight:600}
+.card-desc{font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:20px}
+.card-meta{display:flex;gap:12px;flex-wrap:wrap}
+.card-tag{background:rgba(255,255,255,.08);border-radius:6px;padding:4px 10px;font-size:.75rem;color:rgba(255,255,255,.55);font-weight:500}
+.card-btn{
+  display:inline-flex;align-items:center;gap:8px;margin-top:20px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  color:#fff;font-size:.85rem;font-weight:600;padding:10px 20px;
+  border-radius:8px;cursor:pointer;transition:all .15s
+}
+.card-btn:hover{background:rgba(255,255,255,.2)}
+
+/* Reference panel */
+.ref-panel{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:28px 32px;max-width:680px;width:100%
+}
+.ref-title{color:rgba(255,255,255,.6);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px}
+.ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ref-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(255,255,255,.04);border-radius:8px}
+.ref-key{
+  font-family:monospace;background:rgba(255,255,255,.12);color:#fff;
+  padding:3px 8px;border-radius:4px;font-size:.78rem;white-space:nowrap;font-weight:600
+}
+.ref-arrow{color:rgba(255,255,255,.3);font-size:.8rem}
+.ref-desc{color:rgba(255,255,255,.5);font-size:.8rem}
+
+/* ════ TEST SCREEN ════════════════════════════════════════════════ */
+#screen-test{display:none;flex-direction:column}
+#screen-test.active{display:flex}
+
+/* Top bar */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:var(--navy);color:#fff;
+  display:flex;align-items:center;gap:16px;padding:0 24px;height:60px;
+  box-shadow:0 2px 8px rgba(0,0,0,.2)
+}
+.topbar-back{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.8);font-size:.82rem;font-weight:600;padding:6px 14px;
+  border-radius:7px;cursor:pointer;transition:.15s;flex-shrink:0
+}
+.topbar-back:hover{background:rgba(255,255,255,.18)}
+.topbar-name{font-family:var(--ff-math);font-size:1rem;font-weight:600;color:#fff;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.timer{
+  display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:6px 14px;
+  font-size:.9rem;font-weight:700;color:#fff;font-family:monospace;flex-shrink:0;
+  transition:background .3s
+}
+.timer.warning{background:rgba(239,68,68,.3);border-color:rgba(239,68,68,.5);color:#fca5a5}
+.timer-icon{font-size:.9rem}
+
+/* Section tabs */
+.section-tabs{
+  background:#fff;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 24px;gap:4px;overflow-x:auto;
+  -webkit-overflow-scrolling:touch
+}
+.tab{
+  padding:14px 20px;font-size:.85rem;font-weight:600;color:var(--slate);
+  cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;
+  transition:.15s;display:flex;align-items:center;gap:6px;flex-shrink:0
+}
+.tab:hover{color:var(--blue)}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.tab-done{
+  width:16px;height:16px;background:var(--green);border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:.6rem;color:#fff;flex-shrink:0
+}
+.tab-count{
+  font-size:.7rem;font-weight:700;background:var(--blue-lt);color:var(--blue);
+  padding:1px 6px;border-radius:100px
+}
+
+/* Math toolbar */
+.math-toolbar{
+  background:#fff;border-bottom:2px solid var(--border);
+  padding:10px 24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  position:sticky;top:60px;z-index:90
+}
+.toolbar-label{font-size:.7rem;font-weight:700;color:var(--slate);letter-spacing:.08em;text-transform:uppercase;margin-right:4px;flex-shrink:0}
+.toolbar-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:4px;
+  background:#f1f5f9;border:1px solid var(--border);border-radius:7px;
+  padding:5px 12px;font-size:.82rem;font-weight:600;color:var(--navy);
+  cursor:pointer;transition:.15s;white-space:nowrap;font-family:var(--ff-body)
+}
+.toolbar-btn:hover{background:var(--blue-lt);border-color:var(--blue);color:var(--blue)}
+.toolbar-btn.clear{color:var(--red)}
+.toolbar-btn.clear:hover{background:var(--red-lt);border-color:var(--red)}
+.toolbar-hint{font-size:.72rem;color:var(--slate);margin-left:8px}
+.toolbar-sep{width:1px;height:22px;background:var(--border);flex-shrink:0}
+
+/* Questions container */
+.questions-area{flex:1;padding:24px;max-width:820px;width:100%;margin:0 auto}
+
+.section-header{margin-bottom:24px}
+.section-header h2{font-family:var(--ff-math);font-size:1.3rem;color:var(--navy);font-weight:600;margin-bottom:4px}
+.section-header .s-instruction{font-size:.9rem;color:var(--slate);margin-bottom:2px}
+.section-header .s-note{font-size:.82rem;color:var(--blue);font-style:italic;padding:8px 12px;background:var(--blue-xs);border-left:3px solid var(--blue);border-radius:0 6px 6px 0}
+
+/* Question card */
+.q-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+  margin-bottom:16px;overflow:hidden;box-shadow:var(--shadow);
+  transition:box-shadow .2s
+}
+.q-card:focus-within{box-shadow:var(--shadow-md);border-color:#93c5fd}
+.q-card-head{
+  display:flex;align-items:center;gap:12px;padding:14px 18px;
+  border-bottom:1px solid #f1f5f9;background:#fafbfc
+}
+.q-num{
+  width:32px;height:32px;background:var(--navy);color:#fff;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.85rem;flex-shrink:0
+}
+.q-label{font-weight:600;font-size:.9rem;color:var(--navy);flex:1}
+.q-marks{
+  background:var(--gold-lt);color:var(--gold);border:1px solid #fde68a;
+  font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:100px;flex-shrink:0
+}
+.q-card-body{padding:18px}
+
+/* Math display (KaTeX rendered question) */
+.math-display-wrap{
+  display:flex;align-items:center;justify-content:center;
+  padding:16px 12px;background:linear-gradient(135deg,#f8fafc,#f1f5f9);
+  border:1px solid var(--border);border-radius:8px;margin-bottom:16px;
+  min-height:64px
+}
+.math-display-wrap .katex{font-size:1.45rem !important}
+.math-display-wrap .katex-display{margin:0 !important}
+
+/* Answer area */
+.answer-label{font-size:.78rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+
+/* Section D prompt */
+.eq-prompt{
+  font-size:.85rem;color:var(--slate);margin-bottom:8px;display:flex;align-items:center;gap:8px
+}
+.eq-prompt strong{color:var(--navy)}
+
+/* MathQuill field wrapper */
+.mq-wrap{
+  border:2px solid var(--border);border-radius:10px;background:#fff;
+  min-height:52px;padding:4px 12px;cursor:text;transition:.15s;
+  display:flex;align-items:center
+}
+.mq-wrap:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.mq-field{
+  width:100%;min-height:36px;display:flex;align-items:center;
+  font-size:1.2rem !important
+}
+
+/* MathQuill overrides */
+.mq-editable-field{
+  font-size:1.15rem !important;min-width:100%;border:none !important;
+  box-shadow:none !important;outline:none !important
+}
+.mq-editable-field .mq-cursor{border-color:var(--blue)}
+
+/* Working textarea (Section D) */
+.working-label{font-size:.78rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;margin-top:16px}
+.working-area{
+  width:100%;border:2px solid var(--border);border-radius:10px;
+  padding:10px 14px;font-size:.88rem;font-family:var(--ff-body);
+  color:var(--navy);resize:vertical;min-height:90px;line-height:1.6;
+  transition:.15s;background:#fafbfc
+}
+.working-area:focus{outline:none;border-color:#a5b4fc;box-shadow:0 0 0 3px rgba(99,102,241,.1);background:#fff}
+.working-area::placeholder{color:#cbd5e1;font-style:italic}
+
+/* Status indicator per question */
+.q-status{
+  display:inline-flex;align-items:center;gap:5px;font-size:.72rem;
+  font-weight:600;color:#94a3b8;margin-top:8px
+}
+.q-status.answered{color:var(--green)}
+.q-status-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* Bottom nav */
+.bottom-nav{
+  background:#fff;border-top:1px solid var(--border);
+  padding:14px 24px;display:flex;justify-content:space-between;align-items:center;
+  position:sticky;bottom:0;z-index:80
+}
+.progress-info{font-size:.82rem;color:var(--slate);font-weight:500}
+.progress-bar-wrap{flex:1;margin:0 20px;height:6px;background:var(--border);border-radius:100px;overflow:hidden;max-width:240px}
+.progress-bar{height:100%;background:var(--green);border-radius:100px;transition:width .3s}
+.nav-btns{display:flex;gap:10px}
+.nav-btn{
+  padding:9px 20px;font-size:.85rem;font-weight:600;border-radius:8px;
+  cursor:pointer;transition:.15s;border:none
+}
+.btn-prev{background:var(--slate-lt);color:var(--navy)}
+.btn-prev:hover{background:#e2e8f0}
+.btn-next{background:var(--blue);color:#fff}
+.btn-next:hover{background:#1d4ed8}
+.btn-submit{background:var(--green);color:#fff;padding:9px 24px}
+.btn-submit:hover{background:#16a34a}
+
+/* ════ RESULTS SCREEN ════════════════════════════════════════════ */
+#screen-results{display:none;background:#f8fafc;padding:40px 20px}
+#screen-results.active{display:block}
+
+.results-wrap{max-width:820px;margin:0 auto}
+
+.results-hero{
+  background:linear-gradient(135deg,var(--navy),#1d3461);
+  border-radius:16px;padding:40px;text-align:center;margin-bottom:28px;
+  color:#fff;box-shadow:var(--shadow-lg)
+}
+.results-score{
+  font-size:clamp(2.5rem,8vw,4rem);font-weight:800;color:#fff;line-height:1;
+  margin-bottom:4px;font-family:var(--ff-math)
+}
+.results-total{font-size:1.1rem;color:rgba(255,255,255,.55);margin-bottom:16px}
+.results-msg{font-size:1rem;color:rgba(255,255,255,.75);max-width:380px;margin:0 auto 20px}
+.results-pct{
+  display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  border-radius:100px;padding:6px 20px;font-weight:700;font-size:1.1rem
+}
+
+/* Section breakdown */
+.breakdown-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px}
+@media(max-width:500px){.breakdown-grid{grid-template-columns:1fr}}
+.breakdown-card{
+  background:#fff;border:1px solid var(--border);border-radius:10px;
+  padding:16px 18px;box-shadow:var(--shadow)
+}
+.bd-section{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:6px}
+.bd-score{font-size:1.3rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+.bd-bar-wrap{height:6px;background:var(--border);border-radius:100px;overflow:hidden}
+.bd-bar{height:100%;border-radius:100px;transition:width .5s .2s}
+.bd-bar.good{background:var(--green)}
+.bd-bar.ok{background:#f59e0b}
+.bd-bar.low{background:var(--red)}
+
+/* Review table */
+.review-title{font-family:var(--ff-math);font-size:1.15rem;font-weight:600;color:var(--navy);margin-bottom:14px}
+.review-card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+  margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow)
+}
+.review-head{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;
+  border-bottom:1px solid #f1f5f9;background:#fafbfc
+}
+.rv-num{font-weight:700;font-size:.82rem;color:var(--slate);min-width:32px}
+.rv-marks{font-size:.72rem;color:var(--slate)}
+.rv-tick{
+  margin-left:auto;width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700
+}
+.rv-tick.correct{background:var(--green-lt);color:var(--green)}
+.rv-tick.wrong{background:var(--red-lt);color:var(--red)}
+.rv-tick.blank{background:#f1f5f9;color:#94a3b8}
+.review-body{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.rv-cell{padding:12px 14px;font-size:.78rem}
+.rv-cell:not(:last-child){border-right:1px solid #f1f5f9}
+.rv-cell-label{color:var(--slate);font-weight:600;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.rv-cell-math .katex{font-size:.95rem !important}
+.rv-cell-math .katex-display{margin:0 !important}
+.rv-cell.correct-col .rv-cell-math{color:var(--green)}
+.rv-cell.wrong-col .rv-cell-math{color:var(--red)}
+
+/* Results actions */
+.results-actions{display:flex;gap:12px;justify-content:center;margin-top:28px;flex-wrap:wrap}
+.res-btn{
+  padding:11px 28px;font-size:.9rem;font-weight:600;border-radius:9px;
+  cursor:pointer;border:none;transition:.15s
+}
+.res-btn.primary{background:var(--navy);color:#fff}
+.res-btn.primary:hover{background:#1a3a60}
+.res-btn.secondary{background:#fff;color:var(--navy);border:1.5px solid var(--border)}
+.res-btn.secondary:hover{background:var(--slate-lt)}
+
+/* Print button */
+.res-btn.print{background:var(--blue-xs);color:var(--blue);border:1.5px solid var(--blue-lt)}
+.res-btn.print:hover{background:var(--blue-lt)}
+
+/* MathQuill font size fix */
+.mq-math-mode var, .mq-math-mode .mq-int{font-size:1.1rem}
+.mq-editable-field.mq-focused .mq-cursor{border-left-color:var(--blue) !important}
+
+/* Modal */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;
+  display:none;align-items:center;justify-content:center;padding:20px
+}
+.modal-overlay.active{display:flex}
+.modal{
+  background:#fff;border-radius:16px;padding:32px;max-width:400px;width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:center
+}
+.modal h3{font-family:var(--ff-math);font-size:1.3rem;color:var(--navy);margin-bottom:10px}
+.modal p{font-size:.9rem;color:var(--slate);margin-bottom:24px}
+.modal-btns{display:flex;gap:10px;justify-content:center}
+.modal-btn{padding:10px 24px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.88rem;border:none;transition:.15s}
+.modal-cancel{background:var(--slate-lt);color:var(--navy)}
+.modal-cancel:hover{background:#e2e8f0}
+.modal-confirm{background:var(--green);color:#fff}
+.modal-confirm:hover{background:#16a34a}
+
+/* Responsive */
+@media(max-width:600px){
+  .topbar-name{font-size:.85rem}
+  .questions-area{padding:16px}
+  .math-toolbar{padding:8px 16px}
+  .tab{padding:12px 14px;font-size:.8rem}
+  .review-body{grid-template-columns:1fr}
+  .rv-cell:not(:last-child){border-right:none;border-bottom:1px solid #f1f5f9}
+  .toolbar-hint{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LANDING ═══════════════════════════════════════════════════ -->
+<div id="screen-landing" class="screen">
+  <div class="landing-badge">Mathematics — Diligent Math</div>
+  <h1 class="landing-title">Algebraic Fractions<br>Practice Tests</h1>
+  <p class="landing-sub">Three timed practice tests. Each answer you type will display as real math — just like writing on paper.</p>
+
+  <div class="cards-grid">
+    <div class="test-card" style="--card-c1:#3b82f6;--card-c2:#06b6d4" onclick="startTest(1)">
+      <div class="card-level">Test 1</div>
+      <div class="card-title">Foundation</div>
+      <div class="card-desc">Basic simplification, simple LCMs, and straightforward multiplication. Good starting point for everyone.</div>
+      <div class="card-meta">
+        <span class="card-tag">40 marks</span>
+        <span class="card-tag">50 minutes</span>
+        <span class="card-tag">4 sections</span>
+      </div>
+      <div class="card-btn">Start Test 1 →</div>
+    </div>
+    <div class="test-card" style="--card-c1:#8b5cf6;--card-c2:#6366f1" onclick="startTest(2)">
+      <div class="card-level">Test 2</div>
+      <div class="card-title">Intermediate</div>
+      <div class="card-desc">Factorizing both top and bottom, perfect squares, and cross-multiplying to solve equations.</div>
+      <div class="card-meta">
+        <span class="card-tag">40 marks</span>
+        <span class="card-tag">50 minutes</span>
+        <span class="card-tag">4 sections</span>
+      </div>
+      <div class="card-btn">Start Test 2 →</div>
+    </div>
+    <div class="test-card" style="--card-c1:#f59e0b;--card-c2:#ef4444" onclick="startTest(3)">
+      <div class="card-level">Test 3</div>
+      <div class="card-title">CSEC Level</div>
+      <div class="card-desc">Everything — both expressions must be fully factorized. Mirrors real CXC exam difficulty.</div>
+      <div class="card-meta">
+        <span class="card-tag">40 marks</span>
+        <span class="card-tag">50 minutes</span>
+        <span class="card-tag">4 sections</span>
+      </div>
+      <div class="card-btn">Start Test 3 →</div>
+    </div>
+  </div>
+
+  <div class="ref-panel">
+    <div class="ref-title">How to type your answers</div>
+    <div class="ref-grid">
+      <div class="ref-item"><span class="ref-key">2x/3</span><span class="ref-arrow">→</span><span class="ref-desc">becomes a fraction</span></div>
+      <div class="ref-item"><span class="ref-key">x^2</span><span class="ref-arrow">→</span><span class="ref-desc">becomes x²</span></div>
+      <div class="ref-item"><span class="ref-key">x^3</span><span class="ref-arrow">→</span><span class="ref-desc">becomes x³</span></div>
+      <div class="ref-item"><span class="ref-key">sqrt</span><span class="ref-arrow">→</span><span class="ref-desc">becomes √</span></div>
+      <div class="ref-item"><span class="ref-key">Toolbar</span><span class="ref-arrow">→</span><span class="ref-desc">click buttons to insert</span></div>
+      <div class="ref-item"><span class="ref-key">Arrow keys</span><span class="ref-arrow">→</span><span class="ref-desc">move inside the math</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TEST SCREEN ════════════════════════════════════════════════ -->
+<div id="screen-test" class="screen">
+  <div class="topbar">
+    <button class="topbar-back" onclick="confirmBack()">← Home</button>
+    <span class="topbar-name" id="topbar-name">Test</span>
+    <div class="timer" id="timer"><span class="timer-icon">⏱</span><span id="timer-text">50:00</span></div>
+  </div>
+  <div class="section-tabs" id="section-tabs"></div>
+  <div class="math-toolbar">
+    <span class="toolbar-label">Quick keys</span>
+    <button class="toolbar-btn" onclick="mqCmd('frac')" title="Insert fraction">
+      <span style="display:inline-flex;flex-direction:column;align-items:center;gap:0;line-height:1.1;font-size:.8rem"><span>a</span><span style="border-top:1.5px solid currentColor;width:100%;padding-top:1px">b</span></span>&nbsp;Fraction
+    </button>
+    <button class="toolbar-btn" onclick="mqCmd('sq')" title="Square">x²</button>
+    <button class="toolbar-btn" onclick="mqCmd('cube')" title="Cube">x³</button>
+    <button class="toolbar-btn" onclick="mqCmd('sqrt')" title="Square root">√x</button>
+    <button class="toolbar-btn" onclick="mqCmd('lp')" title="Open bracket">( )</button>
+    <button class="toolbar-btn" onclick="mqCmd('neg')" title="Negative">±</button>
+    <div class="toolbar-sep"></div>
+    <button class="toolbar-btn clear" onclick="mqCmd('clear')" title="Clear answer">✕ Clear</button>
+    <span class="toolbar-hint">💡 Type "/" for fractions, "^" for powers</span>
+  </div>
+  <div class="questions-area" id="questions-area"></div>
+  <div class="bottom-nav">
+    <div class="progress-info" id="progress-info">0 of 0 answered</div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+    <div class="nav-btns" id="nav-btns"></div>
+  </div>
+</div>
+
+<!-- ══ RESULTS SCREEN ═════════════════════════════════════════════ -->
+<div id="screen-results" class="screen">
+  <div class="results-wrap">
+    <div class="results-hero">
+      <div class="results-score" id="res-score">—</div>
+      <div class="results-total" id="res-total">out of 40 marks</div>
+      <div class="results-msg" id="res-msg"></div>
+      <div class="results-pct" id="res-pct">—%</div>
+    </div>
+    <div class="breakdown-grid" id="breakdown-grid"></div>
+    <div class="review-title">Question-by-question Review</div>
+    <div id="review-list"></div>
+    <div class="results-actions">
+      <button class="res-btn secondary" onclick="showScreen('landing')">← Choose Another Test</button>
+      <button class="res-btn print" onclick="window.print()">🖨 Print Results</button>
+      <button class="res-btn primary" onclick="retryTest()">↺ Try Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3>Submit your test?</h3>
+    <p id="modal-msg">Once submitted you will see your score and the correct answers.</p>
+    <div style="margin:14px 0;text-align:left">
+      <label style="font-size:.76rem;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:6px">Your name (for the class record)</label>
+      <input id="student-name" type="text" placeholder="e.g. Jordan Smith"
+        style="width:100%;padding:9px 12px;border:2px solid var(--border);border-radius:8px;font-size:.9rem;font-family:var(--ff-body);color:var(--navy);outline:none;transition:border-color .15s"
+        onfocus="this.style.borderColor='#3b82f6'" onblur="this.style.borderColor='#e2e8f0'">
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn modal-cancel" onclick="closeModal()">Keep working</button>
+      <button class="modal-btn modal-confirm" onclick="submitTest()">Submit now</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  TEST DATA
+// ═══════════════════════════════════════════════════════════════
+const TESTS = {
+  1: {
+    name:"Test 1 — Foundation",
+    timeSeconds:3000,
+    sections:[
+      { id:"A", title:"Simplification", marks:12,
+        instruction:"Simplify each of the following fully.",
+        note:"Factorize the numerator or denominator where necessary.",
+        questions:[
+          { id:"t1A1", letter:"a", display:"\\dfrac{6x}{9}", marks:1,
+            answers:["\\frac{2x}{3}","\\dfrac{2x}{3}","\\frac{2}{3}x"] },
+          { id:"t1A2", letter:"b", display:"\\dfrac{15a^2b}{5ab}", marks:1,
+            answers:["3a"] },
+          { id:"t1A3", letter:"c", display:"\\dfrac{x^2+3x}{x}", marks:2,
+            answers:["x+3"] },
+          { id:"t1A4", letter:"d", display:"\\dfrac{4x+8}{4}", marks:2,
+            answers:["x+2"] },
+          { id:"t1A5", letter:"e", display:"\\dfrac{3x^2-6x}{3x}", marks:2,
+            answers:["x-2"] },
+          { id:"t1A6", letter:"f", display:"\\dfrac{x^2-9}{x+3}", marks:4,
+            answers:["x-3"] }
+        ]
+      },
+      { id:"B", title:"Addition & Subtraction", marks:14,
+        instruction:"Write each as a single fraction in its simplest form.",
+        note:"Expand brackets in the numerator where needed.",
+        questions:[
+          { id:"t1B1", letter:"a", display:"\\dfrac{3}{x}+\\dfrac{5}{x}", marks:1,
+            answers:["\\frac{8}{x}","\\dfrac{8}{x}"] },
+          { id:"t1B2", letter:"b", display:"\\dfrac{7}{3x}-\\dfrac{1}{3x}", marks:1,
+            answers:["\\frac{2}{x}","\\dfrac{2}{x}"] },
+          { id:"t1B3", letter:"c", display:"\\dfrac{x}{4}+\\dfrac{x}{6}", marks:2,
+            answers:["\\frac{5x}{12}","\\dfrac{5x}{12}"] },
+          { id:"t1B4", letter:"d", display:"\\dfrac{2}{x}+\\dfrac{3}{4}", marks:3,
+            answers:["\\frac{3x+8}{4x}","\\dfrac{3x+8}{4x}","\\frac{8+3x}{4x}"] },
+          { id:"t1B5", letter:"e", display:"\\dfrac{3}{2x}-\\dfrac{1}{x}", marks:3,
+            answers:["\\frac{1}{2x}","\\dfrac{1}{2x}"] },
+          { id:"t1B6", letter:"f", display:"\\dfrac{x+1}{3}-\\dfrac{x-1}{4}", marks:4,
+            answers:["\\frac{x+7}{12}","\\dfrac{x+7}{12}"] }
+        ]
+      },
+      { id:"C", title:"Multiplication & Division", marks:8,
+        instruction:"Simplify each of the following.",
+        note:"Factorize where necessary before cancelling.",
+        questions:[
+          { id:"t1C1", letter:"a", display:"\\dfrac{3}{x}\\times\\dfrac{x^2}{6}", marks:2,
+            answers:["\\frac{x}{2}","\\dfrac{x}{2}"] },
+          { id:"t1C2", letter:"b", display:"\\dfrac{4a}{5}\\div\\dfrac{8a}{15}", marks:2,
+            answers:["\\frac{3}{2}","\\dfrac{3}{2}"] },
+          { id:"t1C3", letter:"c", display:"\\dfrac{x+2}{4}\\times\\dfrac{8}{x+2}", marks:2,
+            answers:["2"] },
+          { id:"t1C4", letter:"d", display:"\\dfrac{x^2-4}{6}\\times\\dfrac{3}{x+2}", marks:2,
+            answers:["\\frac{x-2}{2}","\\dfrac{x-2}{2}"] }
+        ]
+      },
+      { id:"D", title:"Solving Equations", marks:6, isEquation:true,
+        instruction:"Solve each equation for x. Enter the value of x in the answer box.",
+        note:"Multiply both sides by the LCM to clear fractions. x² terms will cancel — leaving a linear equation.",
+        questions:[
+          { id:"t1D1", letter:"a", display:"\\dfrac{3}{x}=6", marks:2,
+            answers:["\\frac{1}{2}","\\dfrac{1}{2}","0.5","\\frac{1}{2}"] },
+          { id:"t1D2", letter:"b", display:"\\dfrac{2}{x-1}=\\dfrac{4}{x+3}", marks:2,
+            answers:["5"] },
+          { id:"t1D3", letter:"c", display:"\\dfrac{x+4}{x+2}=\\dfrac{x+5}{x+1}", marks:2,
+            answers:["-3","-(3)"] }
+        ]
+      }
+    ]
+  },
+
+  2: {
+    name:"Test 2 — Intermediate",
+    timeSeconds:3000,
+    sections:[
+      { id:"A", title:"Simplification", marks:12,
+        instruction:"Simplify each of the following fully.",
+        note:"Factorize numerator and/or denominator first.",
+        questions:[
+          { id:"t2A1", letter:"a", display:"\\dfrac{2x^2+4x}{2x}", marks:2,
+            answers:["x+2"] },
+          { id:"t2A2", letter:"b", display:"\\dfrac{x^2-4}{x-2}", marks:2,
+            answers:["x+2"] },
+          { id:"t2A3", letter:"c", display:"\\dfrac{x^2+5x+6}{x+2}", marks:3,
+            answers:["x+3"] },
+          { id:"t2A4", letter:"d", display:"\\dfrac{3x^2-12}{x^2-4x+4}", marks:3,
+            answers:["\\frac{3(x+2)}{x-2}","\\frac{3x+6}{x-2}","\\dfrac{3(x+2)}{x-2}","\\dfrac{3x+6}{x-2}"] },
+          { id:"t2A5", letter:"e", display:"\\dfrac{x^2-x-6}{x^2-9}", marks:2,
+            answers:["\\frac{x+2}{x+3}","\\dfrac{x+2}{x+3}"] }
+        ]
+      },
+      { id:"B", title:"Addition & Subtraction", marks:14,
+        instruction:"Write each as a single fraction in its simplest form.",
+        note:"Find the LCM. Expand all numerator brackets. Simplify.",
+        questions:[
+          { id:"t2B1", letter:"a", display:"\\dfrac{3}{x+1}+\\dfrac{2}{x-1}", marks:3,
+            answers:["\\frac{5x-1}{x^2-1}","\\dfrac{5x-1}{x^2-1}"] },
+          { id:"t2B2", letter:"b", display:"\\dfrac{4}{x}-\\dfrac{3}{x+2}", marks:3,
+            answers:["\\frac{x+8}{x(x+2)}","\\dfrac{x+8}{x(x+2)}","\\frac{x+8}{x^2+2x}"] },
+          { id:"t2B3", letter:"c", display:"\\dfrac{x+1}{x-2}-\\dfrac{x-3}{x+1}", marks:4,
+            answers:["\\frac{7x-5}{(x-2)(x+1)}","\\dfrac{7x-5}{(x-2)(x+1)}","\\frac{7x-5}{x^2-x-2}"] },
+          { id:"t2B4", letter:"d", display:"\\dfrac{3}{2x-4}+\\dfrac{1}{x-2}", marks:2,
+            answers:["\\frac{5}{2x-4}","\\dfrac{5}{2x-4}","\\frac{5}{2(x-2)}"] },
+          { id:"t2B5", letter:"e", display:"\\dfrac{5}{x^2-1}+\\dfrac{3}{x+1}", marks:2,
+            answers:["\\frac{3x+2}{x^2-1}","\\dfrac{3x+2}{x^2-1}"] }
+        ]
+      },
+      { id:"C", title:"Multiplication & Division", marks:8,
+        instruction:"Simplify each of the following fully.",
+        note:"Factorize all expressions, then cancel common factors.",
+        questions:[
+          { id:"t2C1", letter:"a", display:"\\dfrac{x^2-4}{x+3}\\times\\dfrac{x+3}{x-2}", marks:2,
+            answers:["x+2"] },
+          { id:"t2C2", letter:"b", display:"\\dfrac{x^2+3x}{x^2}\\div\\dfrac{x+3}{x}", marks:2,
+            answers:["1"] },
+          { id:"t2C3", letter:"c", display:"\\dfrac{2x+4}{3}\\div\\dfrac{x+2}{6}", marks:2,
+            answers:["4"] },
+          { id:"t2C4", letter:"d", display:"\\dfrac{x^2-9}{x+2}\\times\\dfrac{x+2}{x-3}", marks:2,
+            answers:["x+3"] }
+        ]
+      },
+      { id:"D", title:"Solving Equations", marks:6, isEquation:true,
+        instruction:"Solve each equation for x. Enter the value of x in the answer box.",
+        note:"Multiply through by the LCM. Expand all brackets. x² terms will cancel — leaving a linear equation.",
+        questions:[
+          { id:"t2D1", letter:"a", display:"\\dfrac{7}{x+2}=1+\\dfrac{3}{x+2}", marks:2,
+            answers:["2"] },
+          { id:"t2D2", letter:"b", display:"\\dfrac{x+5}{x-1}=\\dfrac{x+3}{x-2}", marks:2,
+            answers:["7"] },
+          { id:"t2D3", letter:"c", display:"\\dfrac{2}{x+1}+\\dfrac{3}{x-2}=\\dfrac{14}{(x+1)(x-2)}", marks:2,
+            answers:["3"] }
+        ]
+      }
+    ]
+  },
+
+  3: {
+    name:"Test 3 — CSEC Level",
+    timeSeconds:3000,
+    sections:[
+      { id:"A", title:"Simplification", marks:12,
+        instruction:"Simplify each of the following fully.",
+        note:"Factorize BOTH numerator and denominator completely before simplifying.",
+        questions:[
+          { id:"t3A1", letter:"a", display:"\\dfrac{x^2+6x+9}{x^2-9}", marks:3,
+            answers:["\\frac{x+3}{x-3}","\\dfrac{x+3}{x-3}"] },
+          { id:"t3A2", letter:"b", display:"\\dfrac{2x^2-8}{x^2+3x+2}", marks:3,
+            answers:["\\frac{2(x-2)}{x+1}","\\dfrac{2(x-2)}{x+1}","\\frac{2x-4}{x+1}","\\dfrac{2x-4}{x+1}"] },
+          { id:"t3A3", letter:"c", display:"\\dfrac{3x^2+9x}{x^2+5x+6}", marks:3,
+            answers:["\\frac{3x}{x+2}","\\dfrac{3x}{x+2}"] },
+          { id:"t3A4", letter:"d", display:"\\dfrac{x^2-2x-15}{x^2-25}", marks:3,
+            answers:["\\frac{x+3}{x+5}","\\dfrac{x+3}{x+5}"] }
+        ]
+      },
+      { id:"B", title:"Addition & Subtraction", marks:14,
+        instruction:"Write each as a single fraction in its simplest form.",
+        note:"Factorize denominators first to find the LCM. Expand and simplify the numerator.",
+        questions:[
+          { id:"t3B1", letter:"a", display:"\\dfrac{3}{x+2}+\\dfrac{4}{x-2}", marks:3,
+            answers:["\\frac{7x+2}{x^2-4}","\\dfrac{7x+2}{x^2-4}"] },
+          { id:"t3B2", letter:"b", display:"\\dfrac{x}{x-3}-\\dfrac{2}{x+1}", marks:3,
+            answers:["\\frac{x^2-x+6}{(x-3)(x+1)}","\\dfrac{x^2-x+6}{(x-3)(x+1)}","\\frac{x^2-x+6}{x^2-2x-3}"] },
+          { id:"t3B3", letter:"c", display:"\\dfrac{2}{x^2-4}+\\dfrac{1}{x+2}", marks:4,
+            answers:["\\frac{x}{x^2-4}","\\dfrac{x}{x^2-4}"] },
+          { id:"t3B4", letter:"d", display:"\\dfrac{3}{x^2+5x+6}-\\dfrac{1}{x+2}", marks:2,
+            answers:["\\frac{-x}{(x+2)(x+3)}","\\dfrac{-x}{(x+2)(x+3)}","\\frac{-x}{x^2+5x+6}","-\\frac{x}{(x+2)(x+3)}"] },
+          { id:"t3B5", letter:"e", display:"\\dfrac{2x+1}{x^2-1}-\\dfrac{1}{x-1}", marks:2,
+            answers:["\\frac{x}{x^2-1}","\\dfrac{x}{x^2-1}"] }
+        ]
+      },
+      { id:"C", title:"Multiplication & Division", marks:8,
+        instruction:"Simplify each of the following fully.",
+        note:"Factorize all expressions completely. Cancel all common factors.",
+        questions:[
+          { id:"t3C1", letter:"a", display:"\\dfrac{x^2-9}{x^2+5x+6}\\times\\dfrac{x+2}{x-3}", marks:4,
+            answers:["1"] },
+          { id:"t3C2", letter:"b", display:"\\dfrac{x^2+2x}{x^2-1}\\div\\dfrac{x+2}{x-1}", marks:4,
+            answers:["\\frac{x}{x+1}","\\dfrac{x}{x+1}"] }
+        ]
+      },
+      { id:"D", title:"Solving Equations", marks:6, isEquation:true,
+        instruction:"Solve each equation for x. Enter the value of x in the answer box.",
+        note:"Multiply through by the LCM. Expand all brackets. x² terms will cancel — leaving a linear equation.",
+        questions:[
+          { id:"t3D1", letter:"a", display:"\\dfrac{3}{x+2}+\\dfrac{2}{x-1}=\\dfrac{16}{(x+2)(x-1)}", marks:2,
+            answers:["3"] },
+          { id:"t3D2", letter:"b", display:"\\dfrac{4}{x-3}-\\dfrac{1}{x+2}=\\dfrac{23}{(x-3)(x+2)}", marks:2,
+            answers:["4"] },
+          { id:"t3D3", letter:"c", display:"\\dfrac{2x+1}{x+3}=\\dfrac{2x-1}{x+1}", marks:2,
+            answers:["2"] }
+        ]
+      }
+    ]
+  }
+};
+
+// ═══════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════
+const state = {
+  testNum:       null,
+  sectionIdx:    0,
+  answers:       {},   // qid → latex string
+  workings:      {},   // qid → plain text
+  mqFields:      {},   // qid → MathQuill field object
+  activeMQ:      null, // currently focused field
+  timerInterval: null,
+  timeRemaining: 0,
+  submitted:     false,
+  retryTest:     null
+};
+
+var MQ; // MathQuill interface
+
+// ═══════════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  MQ = MathQuill.getInterface(2);
+  showScreen('landing');
+});
+
+// ═══════════════════════════════════════════════════════════════
+//  SCREEN NAVIGATION
+// ═══════════════════════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  START TEST
+// ═══════════════════════════════════════════════════════════════
+function startTest(num) {
+  clearInterval(state.timerInterval);
+  state.testNum      = num;
+  state.sectionIdx   = 0;
+  state.answers      = {};
+  state.workings     = {};
+  state.mqFields     = {};
+  state.activeMQ     = null;
+  state.submitted    = false;
+  state.timeRemaining = TESTS[num].timeSeconds;
+
+  document.getElementById('topbar-name').textContent = TESTS[num].name;
+  buildTabs();
+  renderSection(0);
+  startTimer();
+  showScreen('test');
+}
+
+function retryTest() {
+  startTest(state.testNum);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  TABS
+// ═══════════════════════════════════════════════════════════════
+function buildTabs() {
+  const test = TESTS[state.testNum];
+  const container = document.getElementById('section-tabs');
+  container.innerHTML = test.sections.map((s, i) => `
+    <div class="tab ${i===0?'active':''}" id="tab-${i}" onclick="switchSection(${i})">
+      Section ${s.id}: ${s.title}
+      <span class="tab-count" id="tab-count-${i}">0/${s.questions.length}</span>
+    </div>
+  `).join('') + `
+    <div style="margin-left:auto;padding:0 8px;display:flex;align-items:center">
+      <button class="nav-btn btn-submit" onclick="confirmSubmit()" style="padding:7px 16px;font-size:.8rem;border:none">Submit Test</button>
+    </div>`;
+}
+
+function switchSection(idx) {
+  state.sectionIdx = idx;
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i===idx));
+  renderSection(idx);
+  window.scrollTo(0,0);
+}
+
+function updateTabCounts() {
+  const test = TESTS[state.testNum];
+  test.sections.forEach((s,i) => {
+    const answered = s.questions.filter(q => (state.answers[q.id]||'').trim()!=='').length;
+    const el = document.getElementById(`tab-count-${i}`);
+    if(el) el.textContent = `${answered}/${s.questions.length}`;
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  RENDER SECTION
+// ═══════════════════════════════════════════════════════════════
+function renderSection(idx) {
+  const test    = TESTS[state.testNum];
+  const section = test.sections[idx];
+  const area    = document.getElementById('questions-area');
+
+  area.innerHTML = `
+    <div class="section-header">
+      <h2>Section ${section.id}: ${section.title} <span style="font-size:.85rem;color:var(--slate);font-family:var(--ff-body);font-weight:500">(${section.marks} marks)</span></h2>
+      <p class="s-instruction">${section.instruction}</p>
+      ${section.note ? `<p class="s-note">${section.note}</p>` : ''}
+      ${section.isEquation ? `<p style="margin-top:8px;font-size:.82rem;color:var(--slate);font-style:italic">💡 Type only the value of x in the answer box (e.g. if x = 5, type 5; if x = ½, type 1/2)</p>` : ''}
+    </div>
+    ${section.questions.map(q => buildQuestionCard(q, section)).join('')}
+  `;
+
+  // Render KaTeX displays
+  area.querySelectorAll('[data-latex]').forEach(el => {
+    try {
+      katex.render(el.dataset.latex, el, { throwOnError:false, displayMode:true });
+    } catch(e) { el.textContent = el.dataset.latex; }
+  });
+
+  // Set up MathQuill for each answer span
+  area.querySelectorAll('.mq-span').forEach(span => {
+    const qid = span.dataset.qid;
+    const mf  = MQ.MathField(span, {
+      spaceBehavesLikeTab: false,
+      handlers: {
+        edit: () => {
+          state.answers[qid] = mf.latex();
+          updateAnsweredStatus(qid);
+          updateProgress();
+          updateTabCounts();
+        },
+        enter: () => {}
+      }
+    });
+    state.mqFields[qid] = mf;
+
+    // Restore saved answer
+    if (state.answers[qid]) mf.latex(state.answers[qid]);
+
+    // Track active field for toolbar
+    span.addEventListener('mousedown', () => { state.activeMQ = mf; });
+    span.addEventListener('focusin',   () => { state.activeMQ = mf; });
+    if (state.submitted) mf.blur();
+  });
+
+  // Working areas
+  area.querySelectorAll('.working-area').forEach(ta => {
+    const qid = ta.dataset.qid;
+    if (state.workings[qid]) ta.value = state.workings[qid];
+    ta.addEventListener('input', () => { state.workings[qid] = ta.value; });
+  });
+
+  updateProgress();
+  updateNavBtns();
+}
+
+function buildQuestionCard(q, section) {
+  const isEq = !!section.isEquation;
+  return `
+  <div class="q-card" id="card-${q.id}">
+    <div class="q-card-head">
+      <div class="q-num">${q.letter}</div>
+      <div class="q-label">Question (${q.letter})</div>
+      <div class="q-marks">${q.marks} mark${q.marks>1?'s':''}</div>
+    </div>
+    <div class="q-card-body">
+      <div class="math-display-wrap"><div data-latex="${q.display}"></div></div>
+      ${isEq ? `
+        <div class="working-label">My working (optional — use this space to show your steps)</div>
+        <textarea class="working-area" data-qid="${q.id}" placeholder="Write your working steps here — e.g., multiply both sides by (x+2)(x-1)..."></textarea>
+        <div class="answer-label" style="margin-top:14px">Value of x =</div>
+      ` : `
+        <div class="answer-label">My answer</div>
+      `}
+      <div class="mq-wrap">
+        <span class="mq-span mq-field" data-qid="${q.id}"></span>
+      </div>
+      <div class="q-status" id="status-${q.id}">
+        <span class="q-status-dot"></span> Not yet answered
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  TOOLBAR COMMANDS
+// ═══════════════════════════════════════════════════════════════
+function mqCmd(cmd) {
+  const mq = state.activeMQ;
+  if (!mq) {
+    // Try to focus first field in current section
+    const test = TESTS[state.testNum];
+    const first = test.sections[state.sectionIdx].questions[0];
+    if (state.mqFields[first.id]) {
+      state.activeMQ = state.mqFields[first.id];
+      state.activeMQ.focus();
+      return;
+    }
+    return;
+  }
+  switch(cmd) {
+    case 'frac':  mq.cmd('\\frac'); break;
+    case 'sq':    mq.cmd('^').typedText('2'); break;
+    case 'cube':  mq.cmd('^').typedText('3'); break;
+    case 'sqrt':  mq.cmd('\\sqrt'); break;
+    case 'lp':    mq.typedText('('); break;
+    case 'neg':   mq.typedText('-'); break;
+    case 'clear': mq.latex('');
+      // also clear saved answer
+      Object.keys(state.mqFields).forEach(qid => {
+        if(state.mqFields[qid] === mq) {
+          state.answers[qid] = '';
+          updateAnsweredStatus(qid);
+          updateProgress();
+          updateTabCounts();
+        }
+      });
+      break;
+  }
+  mq.focus();
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  STATUS & PROGRESS
+// ═══════════════════════════════════════════════════════════════
+function updateAnsweredStatus(qid) {
+  const el = document.getElementById('status-' + qid);
+  if (!el) return;
+  const answered = (state.answers[qid]||'').trim() !== '';
+  el.className = 'q-status' + (answered ? ' answered' : '');
+  el.innerHTML = `<span class="q-status-dot"></span> ${answered ? 'Answer saved ✓' : 'Not yet answered'}`;
+}
+
+function updateProgress() {
+  const test = TESTS[state.testNum];
+  const allQs = test.sections.flatMap(s => s.questions);
+  const total    = allQs.length;
+  const answered = allQs.filter(q => (state.answers[q.id]||'').trim() !== '').length;
+  const pct = total ? Math.round(answered/total*100) : 0;
+  const pi = document.getElementById('progress-info');
+  const pb = document.getElementById('progress-bar');
+  if(pi) pi.textContent = `${answered} of ${total} answered`;
+  if(pb) pb.style.width = pct + '%';
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  NAVIGATION BUTTONS
+// ═══════════════════════════════════════════════════════════════
+function updateNavBtns() {
+  const test  = TESTS[state.testNum];
+  const last  = test.sections.length - 1;
+  const idx   = state.sectionIdx;
+  const btns  = document.getElementById('nav-btns');
+  if(!btns) return;
+  btns.innerHTML = `
+    ${idx > 0 ? `<button class="nav-btn btn-prev" onclick="switchSection(${idx-1})">← Section ${test.sections[idx-1].id}</button>` : ''}
+    ${idx < last ? `<button class="nav-btn btn-next" onclick="switchSection(${idx+1})">Section ${test.sections[idx+1].id} →</button>` : `<button class="nav-btn btn-submit" onclick="confirmSubmit()">Submit Test</button>`}
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  TIMER
+// ═══════════════════════════════════════════════════════════════
+function startTimer() {
+  clearInterval(state.timerInterval);
+  state.timerInterval = setInterval(() => {
+    state.timeRemaining--;
+    updateTimerDisplay();
+    if(state.timeRemaining <= 0) {
+      clearInterval(state.timerInterval);
+      alert('Time is up! Your test will now be submitted.');
+      submitTest();
+    }
+  }, 1000);
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+  const t   = Math.max(0, state.timeRemaining);
+  const m   = String(Math.floor(t/60)).padStart(2,'0');
+  const s   = String(t%60).padStart(2,'0');
+  const el  = document.getElementById('timer-text');
+  const box = document.getElementById('timer');
+  if(el)  el.textContent = `${m}:${s}`;
+  if(box) box.classList.toggle('warning', t < 300);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SUBMIT
+// ═══════════════════════════════════════════════════════════════
+function confirmSubmit() {
+  const test   = TESTS[state.testNum];
+  const allQs  = test.sections.flatMap(s => s.questions);
+  const missing = allQs.filter(q => !(state.answers[q.id]||'').trim()).length;
+  document.getElementById('modal-msg').textContent =
+    missing > 0
+      ? `You have ${missing} unanswered question${missing>1?'s':''}. Once submitted you will see your score and correct answers.`
+      : 'Once submitted you will see your score and the correct answers.';
+  document.getElementById('modal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+}
+
+function confirmBack() {
+  if(confirm('Go back to the home screen? Your progress will be lost.')) {
+    clearInterval(state.timerInterval);
+    showScreen('landing');
+  }
+}
+
+function submitTest() {
+  // Capture student name and time used
+  state.studentName = (document.getElementById('student-name').value || '').trim() || 'Anonymous';
+  const secondsUsed = TESTS[state.testNum].timeSeconds - state.timeRemaining;
+  const m = Math.floor(secondsUsed / 60), s = secondsUsed % 60;
+  state.timeTaken = m + 'm ' + s + 's';
+
+  closeModal();
+  clearInterval(state.timerInterval);
+  state.submitted = true;
+  showResults();
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  ANSWER NORMALISATION & CHECKING
+//
+//  Strategy — 4-step pipeline:
+//  1. stripLatex : remove formatting artifacts (dfrac→frac, \left, spaces…)
+//  2. splitAddTerms : split at depth-0 + / - keeping sign attached
+//  3. canonTerms : sort additive terms  →  x+2  ≡  2+x
+//  4. canonFactors: sort factor groups  →  (x+2)(x-3) ≡ (x-3)(x+2)
+//  parseFrac applies steps 3-4 recursively to numerator & denominator.
+// ═══════════════════════════════════════════════════════════════
+
+// ── Step 1: strip LaTeX formatting artifacts ──────────────────
+function stripLatex(s) {
+  return (s||'')
+    .replace(/\s+/g,'')
+    .replace(/\\dfrac/g,'\\frac')
+    .replace(/\\left\(/g,'(').replace(/\\right\)/g,')')
+    .replace(/\\left\[/g,'[').replace(/\\right\]/g,']')
+    .replace(/\\left/g,'').replace(/\\right/g,'')
+    .replace(/\\ /g,'')
+    // Only unwrap braces in exponent context: x^{2} → x^2, x^{ab} → x^ab
+    // Do NOT strip braces globally — that breaks \frac{A}{B} parsing.
+    .replace(/\^\{(-?[a-z0-9]+)\}/g,'^$1')
+    .toLowerCase().trim();
+}
+
+// ── Step 2: split additive terms at depth-0 ──────────────────
+// Sign is attached to the term that follows it.
+// e.g. "3x+8"  → ["3x", "+8"]
+//      "-3+x"  → ["-3", "+x"]
+//      "x^2-x+6" → ["x^2", "-x", "+6"]
+function splitAddTerms(expr) {
+  const terms = [];
+  let depth = 0, cur = '';
+  for (let i = 0; i < expr.length; i++) {
+    const c = expr[i];
+    if (c === '(' || c === '{') depth++;
+    else if (c === ')' || c === '}') depth--;
+    // Split on + or - at depth 0, but only when cur is non-empty
+    if (depth === 0 && (c === '+' || c === '-') && cur.length > 0) {
+      terms.push(cur);
+      cur = c;         // new term starts with this sign
+    } else {
+      cur += c;
+    }
+  }
+  if (cur) terms.push(cur);
+  return terms;
+}
+
+// ── Step 3: sort additive terms canonically ───────────────────
+// Order: higher-degree variable terms first, pure constants last.
+// Within same type, lexicographic on the unsigned body.
+function canonTerms(expr) {
+  const terms = splitAddTerms(expr);
+  if (terms.length < 2) return expr;
+
+  const body  = t => (t[0] === '+' || t[0] === '-') ? t.slice(1) : t;
+  const hasVar = s => /[a-z]/.test(s);
+  const degree = s => {
+    const m = s.match(/\^(\d+)/);
+    if (m) return parseInt(m[1]);
+    return hasVar(s) ? 1 : 0;
+  };
+
+  terms.sort((a, b) => {
+    const ab = body(a), bb = body(b);
+    const av = hasVar(ab), bv = hasVar(bb);
+    if (av && !bv) return -1;          // variables before constants
+    if (!av && bv) return 1;
+    const ad = degree(ab), bd = degree(bb);
+    if (ad !== bd) return bd - ad;      // higher degree first
+    return ab.localeCompare(bb);        // lexicographic tiebreak
+  });
+
+  return terms.map((t, i) => {
+    if (i === 0) return t[0] === '+' ? t.slice(1) : t;
+    // If a term was reordered to position > 0 but carries no sign (it was
+    // the first term originally), insert an explicit '+' before it.
+    if (t[0] === '+' || t[0] === '-') return t;
+    return '+' + t;
+  }).join('');
+}
+
+// ── Step 4: sort parenthesised factor groups ──────────────────
+// e.g. (x-3)(x+2)  →  (x+2)(x-3)   [sorted lexicographically]
+// A leading coefficient like "3" is preserved as a prefix.
+function canonFactors(expr) {
+  if (!expr.includes('(')) return expr;
+
+  let depth = 0, cur = '', prefix = '', collecting = false;
+  const groups = [];
+
+  for (let i = 0; i < expr.length; i++) {
+    const c = expr[i];
+    if (c === '(' && depth === 0) {
+      if (!collecting && cur) { prefix = cur; cur = ''; }
+      collecting = true;
+      depth++;
+      cur += c;
+    } else if (c === ')') {
+      depth--;
+      cur += c;
+      if (depth === 0 && collecting) {
+        groups.push(cur);
+        cur = '';
+      }
+    } else {
+      cur += c;
+    }
+  }
+
+  // Only reorder when the whole expression is factors (nothing left over)
+  if (groups.length > 1 && !cur.trim()) {
+    const sorted = groups
+      .map(g => '(' + canonTerms(g.slice(1,-1)) + ')')
+      .sort();
+    return prefix + sorted.join('');
+  }
+  return expr;
+}
+
+// ── parseFrac: pull out numerator and denominator ─────────────
+function parseFrac(s) {
+  if (!s.startsWith('\\frac{')) return null;
+  let i = 6, d = 1, num = '';
+  while (i < s.length) {
+    const c = s[i];
+    if (c === '{') { d++; num += c; }
+    else if (c === '}') { d--; if (d === 0) { i++; break; } num += c; }
+    else { num += c; }
+    i++;
+  }
+  if (i >= s.length || s[i] !== '{') return null;
+  i++; d = 1; let den = '';
+  while (i < s.length) {
+    const c = s[i];
+    if (c === '{') { d++; den += c; }
+    else if (c === '}') { d--; if (d === 0) { i++; break; } den += c; }
+    else { den += c; }
+    i++;
+  }
+  return { num, den, rest: s.slice(i) };
+}
+
+// ── Full recursive canonicalisation ──────────────────────────
+// Handles fractions recursively, then sorts terms and factors.
+function canonical(s) {
+  if (!s) return '';
+
+  // Fraction: apply recursively to num and den
+  const frac = parseFrac(s);
+  if (frac) {
+    const n = canonical(frac.num);
+    const d = canonical(frac.den);
+    const r = frac.rest ? canonical(frac.rest) : '';
+    return '\\frac{' + n + '}{' + d + '}' + r;
+  }
+
+  // Sort additive terms, then sort multiplicative factors
+  return canonFactors(canonTerms(s));
+}
+
+// ── Public API ────────────────────────────────────────────────
+function fullNorm(s)  { return canonical(stripLatex(s)); }
+
+function isCorrect(q) {
+  const student = fullNorm(state.answers[q.id] || '');
+  if (!student) return false;
+  return q.answers.some(a => fullNorm(a) === student);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  RESULTS
+// ═══════════════════════════════════════════════════════════════
+function showResults() {
+  const test = TESTS[state.testNum];
+
+  // Calculate scores
+  let totalEarned = 0, totalMax = 0;
+  const sectionScores = test.sections.map(s => {
+    let earned = 0, max = 0;
+    s.questions.forEach(q => {
+      max += q.marks;
+      if(isCorrect(q)) earned += q.marks;
+    });
+    totalEarned += earned;
+    totalMax    += max;
+    return { title:`Section ${s.id}: ${s.title}`, earned, max };
+  });
+
+  const pct = Math.round(totalEarned/totalMax*100);
+
+  // Score card
+  document.getElementById('res-score').textContent = totalEarned;
+  document.getElementById('res-total').textContent  = `out of ${totalMax} marks`;
+  document.getElementById('res-pct').textContent    = `${pct}%`;
+  document.getElementById('res-msg').textContent    = getMessage(pct);
+
+  // Section breakdown
+  const bdGrid = document.getElementById('breakdown-grid');
+  bdGrid.innerHTML = sectionScores.map(s => {
+    const sPct = s.max ? Math.round(s.earned/s.max*100) : 0;
+    const cls  = sPct>=70?'good':sPct>=50?'ok':'low';
+    return `<div class="breakdown-card">
+      <div class="bd-section">${s.title}</div>
+      <div class="bd-score">${s.earned} / ${s.max}</div>
+      <div class="bd-bar-wrap"><div class="bd-bar ${cls}" style="width:${sPct}%"></div></div>
+    </div>`;
+  }).join('');
+
+  // Per-question review
+  const reviewList = document.getElementById('review-list');
+  reviewList.innerHTML = test.sections.flatMap(s =>
+    s.questions.map(q => {
+      const correct  = isCorrect(q);
+      const blank    = !(state.answers[q.id]||'').trim();
+      const tickCls  = blank ? 'blank' : correct ? 'correct' : 'wrong';
+      const tickTxt  = blank ? '—' : correct ? '✓' : '✗';
+      const stuLx    = state.answers[q.id] || '';
+      const corLx    = q.answers[0];
+      return `
+      <div class="review-card">
+        <div class="review-head">
+          <span class="rv-num">Section ${s.id} (${q.letter})</span>
+          <span class="rv-marks">${q.marks} mark${q.marks>1?'s':''}</span>
+          <span class="rv-tick ${tickCls}">${tickTxt}</span>
+        </div>
+        <div class="review-body">
+          <div class="rv-cell">
+            <div class="rv-cell-label">Question</div>
+            <div class="rv-cell-math" id="rv-q-${q.id}"></div>
+          </div>
+          <div class="rv-cell ${blank?'':'('+(correct?'correct':'wrong')+'-col'}">
+            <div class="rv-cell-label">Your answer</div>
+            <div class="rv-cell-math" id="rv-s-${q.id}"></div>
+          </div>
+          <div class="rv-cell correct-col">
+            <div class="rv-cell-label">Correct answer</div>
+            <div class="rv-cell-math" id="rv-c-${q.id}"></div>
+          </div>
+        </div>
+      </div>`;
+    })
+  ).join('');
+
+  // Render math in review (after DOM update)
+  requestAnimationFrame(() => {
+    test.sections.flatMap(s=>s.questions).forEach(q => {
+      renderInline(`rv-q-${q.id}`, q.display);
+      renderInline(`rv-s-${q.id}`, state.answers[q.id] || '—');
+      renderInline(`rv-c-${q.id}`, q.answers[0]);
+    });
+  });
+
+  showScreen('results');
+
+  // ── Send results to Google Sheets (only runs on Apps Script) ──
+  // google.script.run is only available when deployed as a GAS web app.
+  // It is safely ignored when opening the file locally or in preview.
+  if (typeof google !== 'undefined' && google.script && google.script.run) {
+    google.script.run
+      .withSuccessHandler(function() {
+        console.log('Score logged to Google Sheets.');
+      })
+      .withFailureHandler(function(err) {
+        console.warn('Sheets logging failed:', err);
+      })
+      .logResult(
+        state.studentName || 'Anonymous',
+        state.testNum,
+        totalEarned,
+        totalMax,
+        pct,
+        state.timeTaken || '—'
+      );
+  }
+}
+
+function renderInline(id, latex) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (latex === '—') { el.textContent = '—'; return; }
+  try {
+    katex.render(latex, el, { throwOnError:false, displayMode:false });
+  } catch(e) { el.textContent = latex; }
+}
+
+function getMessage(pct) {
+  if(pct >= 90) return "Outstanding! You have mastered algebraic fractions. 🌟";
+  if(pct >= 75) return "Excellent work! You have a strong understanding of this topic.";
+  if(pct >= 60) return "Good effort! Review the questions you missed and try again.";
+  if(pct >= 50) return "A fair attempt. Focus on the sections where you lost the most marks.";
+  if(pct >= 35) return "Keep practising! Study the worked solutions and try again.";
+  return "Don't give up — every expert was once a beginner. Study the solutions carefully and try again.";
+}
+</script>
+</body>
+</html>
